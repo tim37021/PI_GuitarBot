@@ -1,4 +1,9 @@
 PI_GuitarBot
 ============
 
-PHP application for reading music score &amp; converting it into binary commandssent to serial bus. This repository defines formats of hardware configuration, music score input and binary serial output for the application.
+     This is a PHP application for processing sheet music into binary serial
+commands. It is a part of GuitarBot project.
+     The application originally resides in PI (RaspberryPI), which sends binary
+commands to STM32Discovery through serial bus. The following chapters introduce
+formats of hardware configuration specification, sheet music input, and binary
+serial output.
