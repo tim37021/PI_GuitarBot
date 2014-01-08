@@ -1,7 +1,7 @@
 <?php
  count($argv) == 3 or die("Usage: php -e $argv[0] <config_script> <score_script>\n");
  $latency = read_config($argv[1]);
- $sheet = "^(3510)16 | (45)4 (34)4 (23)4 (1423)4 | ......";
+ $sheet = file_get_contents($argv[2]) or die("Error reading $argv[2]\n");
  preg_match_all("/\^?\(((\d\d)+)\)(\d+)/", $sheet, $score, PREG_SET_ORDER);
  $string_map = array();
  $tempo = array("tempo" => 60, "divisions" => 1, "unit" => null);

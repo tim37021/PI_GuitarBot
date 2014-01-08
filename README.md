@@ -41,3 +41,20 @@ human can hear the pitch played on a guitar.
 state.
      All <value> are measured in seconds, while <from_string> and <to_string>
 must be positive integers.
+
+[-] Music score <score_script>
+     Music score must be a file of plaintext. Only "notes" will be fetched from
+the script. One note is one or more playing commands enclosed by parentheses.
+For example, (1021) is a note played with the first (the thinnest) string open
+and the second string pressed at position 1. Note: The larger position number
+corresponds to the higher pitch.
+     There must be a duration number following each note. For example, if the
+shortest note is a eighth note, then duration numbers are 1, 2, 4, and 8 for
+eighth, quarter, half, and whole notes respectively. For triplets, all duration
+numbers in this score should be dividable by 3, except notes of triplets. Thus,
+duration numbers can always be integers, retaining its accuracy and simplicity.
+     For special skill of playing a chord in guitar, there can be a ^ mark in
+front of such note. Strings are fretted successively either in up-to-down or
+down-to-up order, according to direction of the arrow beside the note on printed
+score. To support this skill, the script requires that playing commands of such
+notes should be ordered (either direction) by string numbars.
