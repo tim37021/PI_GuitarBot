@@ -14,7 +14,7 @@
     $string_map[$string_id] = array();
    if (array_key_exists($time_axis, $string_map[$string_id]))
     die("Conflict operation on the same string.\n");
-   $string_map[$string_id][$time_axis] = $position;
+   $string_map[$string_id][$time_axis] = array("position" => $position, "duration" => (int)$tuple[3]);
   }
   $time_axis += $tuple[3];
  }
