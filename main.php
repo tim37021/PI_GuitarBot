@@ -1,4 +1,8 @@
 <?php
+define("STRING_FRET", 8);
+define("STRING_PRESS", 6);
+define("STRING_RELEASE", 7);
+
  count($argv) == 3 or die("Usage: php -e $argv[0] <config_script> <score_script>\n");
  $latency = read_config($argv[1]);
  $sheet = file_get_contents($argv[2]) or die("Error reading $argv[2]\n");
@@ -20,6 +24,71 @@
  }
  $tempo["unit"] = (int)round((60000/$tempo["tempo"])/$tempo["divisions"]);
  print_r($string_map);
+
+class guitar_string
+{
+ private $id = null;
+ private $state = array("position" => 1, "pressed" => false);
+
+ public function guitar_string($id)
+ {
+  0 < $id && $id <= 16 or die("Invalid ID for guitar_string class.\n");
+  $this->id = $id - 1;
+ }
+
+ private function fret()
+ {
+  return $this->id.STRING_FRET;
+ }
+
+ private function find($position)
+ {
+  return $this->id.$position;
+ }
+
+ public function play($position, $latency)
+ {
+  $result = array();
+  $time = 0;
+  if ($position == 0) {
+   if ($this->state["pressed"]) {
+    $time -= $latency["release"];
+    $result["release"] = array("time" => $time, "code" => $this->release());
+   }
+   $this->state["pressed"] = false;
+  }
+  else {
+   if ($this->state["position"] != $position) {
+    $time -= $latency["press"];
+    $result["press"] = array("time" => $time, "code" => $this->press());
+    $time -= $latency["move"][$this->state["position"]][$position];
+    $result["move"] = array("time" => $time, "code" => $this->find($position));
+    if ($this->state["pressed"]) {
+     $time -= $latency["release"];
+     $result["release"] = array("time" => $time, "code" => $this->release());
+    }
+   }
+   else if (!$this->state["pressed"]) {
+    $time -= $latency["press"];
+    $result["press"] = array("time" => $time, "code" => $this->press());
+   }
+   $this->state["position"] = $position;
+   $this->state["pressed"] = true;
+  }
+  $result["fret"] = array("time" => 0, "code" => $this->fret());
+  return $result;
+ }
+
+ private function press()
+ {
+  return $this->id.STRING_PRESS;
+ }
+
+ private function release()
+ {
+  return $this->id.STRING_RELEASE;
+ }
+}
 
 function read_config($source)
 {
