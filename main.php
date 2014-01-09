@@ -42,7 +42,12 @@ define("STRING_RELEASE", 7);
   }
  }
  ksort($command_map);
- print_r($command_map);
+ foreach($command_map as $time => $command) {
+  echo $time;
+  foreach ($command as $byte)
+   echo " $byte";
+  echo "\n";
+ }
 
 class guitar_string
 {
