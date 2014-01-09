@@ -42,8 +42,10 @@ define("STRING_RELEASE", 7);
   }
  }
  ksort($command_map);
+ reset($command_map);
+ $origin = key($command_map);
  foreach($command_map as $time => $command) {
-  echo $time;
+  echo $time - $origin;
   foreach ($command as $byte)
    echo " $byte";
   echo "\n";
