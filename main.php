@@ -23,7 +23,26 @@ define("STRING_RELEASE", 7);
   $time_axis += $tuple[3];
  }
  $tempo["unit"] = (int)round((60000/$tempo["tempo"])/$tempo["divisions"]);
- print_r($string_map);
+ $command_map = array();
+ foreach ($string_map as $id => $schedule) {
+  $string = new guitar_string($id);
+  ksort($schedule);
+  $last_attack = null;
+  foreach ($schedule as $time => $note) {
+   $action = $string->play($note["position"], $latency);
+   foreach ($action as $command) {
+    $real_time = $time * $tempo["unit"] + $command["time"];
+    if ($last_attack !== null && $real_time < $last_attack + $latency["fret"])
+     die("No enough time for playing.\n");
+    if (!array_key_exists($real_time, $command_map))
+     $command_map[$real_time] = array();
+    array_push($command_map[$real_time], $command["code"]);
+   }
+   $last_attack = $time * $tempo["unit"];
+  }
+ }
+ ksort($command_map);
+ print_r($command_map);
 
 class guitar_string
 {
