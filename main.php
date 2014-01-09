@@ -18,6 +18,7 @@
   }
   $time_axis += $tuple[3];
  }
+ $tempo["unit"] = (int)round((60000/$tempo["tempo"])/$tempo["divisions"]);
  print_r($string_map);
 
 function read_config($source)
