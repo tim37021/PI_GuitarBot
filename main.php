@@ -31,7 +31,7 @@ function read_config($source)
    case "fret_latency":
     count($data) == 2 or die("Error fret_latency assignment\n");
     !array_key_exists("fret", $latency) or die("Conflict assignment of fret_latency\n");
-    $latency["fret"] = to_nonnegative_float($data[1], "Error format of fret_latency\n");
+    $latency["fret"] = to_positive_int($data[1], "Error format of fret_latency\n");
    break;
    case "move_latency":
     count($data) == 4 or die("Error move_latency assignment\n");
@@ -43,17 +43,17 @@ function read_config($source)
      $latency["move"][$data[1]] = array();
     !array_key_exists($data[2], $latency["move"][$data[1]]) or die("Conflict assignment of move_latency $data[1] $data[2]\n");
     $data[1] != $data[2] or die("move_latency cannot apply to the same position\n");
-    $latency["move"][$data[1]][$data[2]] = to_nonnegative_float($data[3], "Error format of move_latency parameter #3\n");
+    $latency["move"][$data[1]][$data[2]] = to_positive_int($data[3], "Error format of move_latency parameter #3\n");
    break;
    case "press_latency":
     count($data) == 2 or die("Error press_latency assignment\n");
     !array_key_exists("press", $latency) or die("Conflict assignment of press_latency\n");
-    $latency["press"] = to_nonnegative_float($data[1], "Error format of press_latency\n");
+    $latency["press"] = to_positive_int($data[1], "Error format of press_latency\n");
    break;
    case "release_latency":
     count($data) == 2 or die("Error release_latency assignment\n");
     !array_key_exists("release", $latency) or die("Conflict assignment of release_latency\n");
-    $latency["release"] = to_nonnegative_float($data[1], "Error format of release_latency\n");
+    $latency["release"] = to_positive_int($data[1], "Error format of release_latency\n");
    break;
   }
  }
@@ -66,12 +66,6 @@ function read_config($source)
   }
  }
  return $latency;
-}
-
-function to_nonnegative_float($f, $e)
-{
- preg_match("/^\s*\d+(\.\d+)?\s*$/", $f) or die($e);
- return (float)$f;
 }
 
 function to_positive_int($n, $e)

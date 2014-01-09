@@ -39,8 +39,8 @@ state.
 human can hear the pitch played on a guitar.
      release_latency is the delay for motor movement from [press] to [release]
 state.
-     All <value> are measured in seconds, while <from_string> and <to_string>
-must be positive integers.
+     <value>, <from_string> and <to_string> are positive integers, where <value>
+is measured in milliseconds.
 
 [-] Music score <score_script>
      Music score must be a file of plaintext. Only "notes" will be fetched from
