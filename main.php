@@ -23,6 +23,7 @@ define("STRING_RELEASE", 7);
   $time_axis += $tuple[3];
  }
  $tempo["unit"] = (int)round((60000/$tempo["tempo"])/$tempo["divisions"]);
+ $tempo["unit"] = 260;
  $command_map = array();
  foreach ($string_map as $id => $schedule) {
   $string = new guitar_string($id);
