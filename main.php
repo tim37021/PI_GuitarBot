@@ -6,10 +6,10 @@ require_once 'chord.inc.php';
 
  count($argv) == 3 or my_die("Usage: php -e $argv[0] <config_script> <score_script>\n");
  $latency = read_config($argv[1]);
- $sheet = file_get_contents($argdev[2]) or my_die("Error reading $argv[2]\n");
+ $sheet = file_get_contents($argv[2]) or my_die("Error reading $argv[2]\n");
  //support chord name
  foreach($chord as $key => $value){
-	str_replace("($key)", "($value)", $sheet);
+	$sheet=str_replace("($key)", "($value)", $sheet);
  }
  /////////////////////
  preg_match_all("/\^?\(((\d\d)+)\)(\d+)/", $sheet, $score, PREG_SET_ORDER);
