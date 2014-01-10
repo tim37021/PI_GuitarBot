@@ -29,7 +29,7 @@ require_once 'chord.inc.php';
   $time_axis += $tuple[3];
  }
  $tempo["unit"] = (int)round((60000/$tempo["tempo"])/$tempo["divisions"]);
- $tempo["unit"] = 260;
+ $tempo["unit"] = 575;
  $command_map = array();
  foreach ($string_map as $id => $schedule) {
   $string = new guitar_string($id);
